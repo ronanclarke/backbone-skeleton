@@ -29,18 +29,51 @@ module.exports = function (grunt) {
                 options: {
                     mainConfigFile: ['public/app/config.common.js', 'public/app/config.common.js'],
                     include: ['init'],
-                    out: 'public/dist/out.min.js'
+                    out: 'public/dist/app.bundled.js'
                 }
             }
 
 
         },
 
+        less: {
+            'public/dist/app.bundled.css': ['public/css/less/main.less']
+        },
+
+        uglify: {
+            my_target: {
+                files: {
+                    'public/dist/app.min.js': ['public/dist/app.bundled.js']
+                }
+            }
+
+        },
+
+        cssmin: {
+            options: {
+                shorthandCompacting: false,
+                roundingPrecision: -1
+            },
+            target: {
+                files: {
+                    'public/dist/app.min.css': ['public/dist/app.bundled.css']
+                }
+            }
+        },
+
+        clean: ['public/dist']
+
 
     });
 
+    grunt.loadNpmTasks('grunt-contrib-less');
     grunt.loadNpmTasks('grunt-contrib-requirejs');
+    grunt.loadNpmTasks('grunt-contrib-uglify');
+    grunt.loadNpmTasks('grunt-contrib-cssmin');
+    grunt.loadNpmTasks('grunt-contrib-clean');
 
-    grunt.registerTask('build', ['requirejs']);
+    grunt.registerTask('build', ['clean','requirejs', 'less']);
+    grunt.registerTask('release', ['build', 'uglify','cssmin']);
+
 
 };

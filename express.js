@@ -8,15 +8,12 @@ var app = express();
 
 app.use(express.static('public'));
 
-app.set('view engine', 'ejs');
-
-app.get("/partials/:partialPath",function(req,res){
-    res.render('partials/' + req.params.partialPath);
-});
-
 app.get('*', function (req, res) {
-    //res.sendFile(path.join(__dirname + '/../app/index.html'));
-    res.sendFile(path.join(__dirname + '/../app/index.dist.html'));
+
+    if (req.query.prod)
+        res.sendFile(path.join(__dirname + '/index.dist.html'));
+    else
+        res.sendFile(path.join(__dirname + '/index.dev.html'));
 });
 
 
