@@ -2,10 +2,11 @@ require(['config.common'], function (commonConfig) {
     require([
         'app',
         'routers/router',
-        'controllers/content.controller',
-        'text!templates/layout.app.html'
+        'controllers/main.controller',
+        'text!templates/layout.app.html',
+        'data'
     ],
-    function (app, Router, ContentController, tmpl) {
+      function (app, Router, MainController, tmpl, Data) {
 
         app.routers = {};
 
@@ -13,16 +14,33 @@ require(['config.common'], function (commonConfig) {
             $('body').prepend(_.template(tmpl));
 
             app.addRegions({
-                content : '#main'
+              results: '#resultsRegion',
+              pinned: '#pinnedRegion',
+              search: '#searchRegion'
             });
         });
 
         app.addInitializer(function () {
             app.controllers = {
-                content : new ContentController({
-                    region : app.content
+              main: new MainController({
+                region: app.main
                 })
             };
+        });
+
+        app.addInitializer(function () {
+          var data = window.data;
+          console.log(data)
+          var allData = new Backbone.Collection(data);
+          this.allData = allData;
+          var filteredData = new Backbone.Collection({});
+          filteredData.reset()
+          filteredData.add(allData.models[1].get("enumItems")[0]);
+          filteredData.add(allData.models[1].get("enumItems")[1]);
+          filteredData.add(allData.models[1].get("enumItems")[2]);
+          filteredData.add(allData.models[1].get("enumItems")[3]);
+          filteredData.add(allData.models[1].get("enumItems")[4]);
+          this.filteredData = filteredData;
         });
 
         app.addInitializer(function () {

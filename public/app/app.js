@@ -14,6 +14,8 @@ define([
 
         });
 
+        window._app = app;
+
         //Params have to be an array of maximum 3 elements.
         app.commands.setHandler('goto', function (route, vent, params) {
             app.router.navigate(route);

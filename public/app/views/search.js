@@ -1,6 +1,6 @@
 define([
     'app',
-    'text!templates/example2.html'
+    'text!templates/search.html'
 ],
 function (app, tmpl) {
     'use strict';

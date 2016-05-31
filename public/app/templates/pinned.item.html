@@ -1,0 +1,18 @@
+<div class="panel panel-info">
+    <div class="panel-heading ">
+        <span class="panel-title"><%= data.model.get("enumName") %></span>
+
+    </div>
+
+    <ul class="list-group">
+        <% _.each(data.model.get("fieldList"), function(fieldPair){ %>
+        <li class="list-group-item"> <%= fieldPair.Key %> <span class="pull-right"><%= fieldPair.Value %></span>
+        </li>
+
+        <% }) %>
+
+
+    </ul>
+
+
+</div>

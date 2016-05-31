@@ -13,7 +13,7 @@ function (app) {
         },
 
         initializeDefaultModule : function () {
-            app.controllers.content.showExample();
+            app.controllers.main.start();
         }
 
     });
