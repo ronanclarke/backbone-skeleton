@@ -6,9 +6,10 @@ define([
   function (app, ResultItemView, tmpl) {
     'use strict';
 
-      var View = Backbone.Marionette.CollectionView.extend({
+      var View = Backbone.Marionette.CompositeView.extend({
 
-        template:  _.template(tmpl),
+          childViewContainer: '#classList',
+          template: _.template(tmpl),
           childView: ResultItemView
 
     });
