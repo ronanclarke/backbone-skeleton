@@ -10,5 +10,10 @@
   "license": "ISC",
   "dependencies": {
     "express": "^4.13.4"
+  },
+  "devDependencies": {
+    "almond": "^0.3.2",
+    "amd-require": "0.0.5",
+    "grunt-contrib-requirejs": "^1.0.0"
   }
 }

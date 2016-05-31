@@ -15,7 +15,8 @@ app.get("/partials/:partialPath",function(req,res){
 });
 
 app.get('*', function (req, res) {
-    res.sendFile(path.join(__dirname + '/../app/index.html'));
+    //res.sendFile(path.join(__dirname + '/../app/index.html'));
+    res.sendFile(path.join(__dirname + '/../app/index.dist.html'));
 });
 
 
