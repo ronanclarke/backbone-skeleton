@@ -14,7 +14,7 @@ define([
             _.extend(this, _.pick(options, ['region']));
             this.controllerEvents = _.extend({}, Backbone.Events);
 
-            this.listenTo(this.controllerEvents, 'example:showSecondPage', this.showExample2);
+          //this.listenTo(this.controllerEvents, 'example:showSecondPage', this.showExample2);
         },
 
       start: function () {
@@ -36,9 +36,6 @@ define([
         }));
         },
 
-        showExample2 : function () {
-          this.searchRegion.show(new Example2View());
-        }
 
     });
 
