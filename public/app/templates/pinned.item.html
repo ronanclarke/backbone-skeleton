@@ -1,13 +1,13 @@
 <div class="panel panel-info">
     <div class="panel-heading ">
-        <span class="panel-title"><%= data.model.get("displayEnumName") %></span>
-        <div class="small"><%= data.displayClassName %></div>
+        <span class="panel-title"><%= data.model.get("displayEnumName") %><i class="fa fa-times pull-right"></i></span>
+        <div class="small"><%= data.model.get("displayClassName") %></div>
 
     </div>
 
     <ul class="list-group">
-        <% _.each(data.model.get("fieldList"), function(fieldPair){ %>
-        <li class="list-group-item"> <%= fieldPair.displayKey %> <span class="pull-right"><%= fieldPair.displayValue %></span>
+        <% _.each(data.model.get("fieldList").models, function(fieldPair){ %>
+        <li class="list-group-item"> <%= fieldPair.get("displayKey") %> <span class="pull-right"><%= fieldPair.get("displayValue") %></span>
         </li>
 
         <% }) %>

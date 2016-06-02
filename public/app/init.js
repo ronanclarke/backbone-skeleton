@@ -28,29 +28,55 @@ require(['config.common'], function (commonConfig) {
                 };
             });
 
+            //
+            // adding this cursory collection definitions here cos in lazy hack mode
+            //
+            app.addInitializer(function () {
+
+                ClassName = Backbone.Model.extend({
+                    parse: function (response) {
+                        response.enumItems = new EnumItems(response.enumItems, {parse: true});
+                        return response;
+                    }
+                });
+
+                EnumItem = Backbone.Model.extend({
+                    parse: function (response) {
+                        response.fieldList = new FieldList(response.fieldList)
+                        return response;
+                    }
+                });
+
+                EnumItems = Backbone.Collection.extend({
+                    model: EnumItem
+                });
+
+                ClassNames = Backbone.Collection.extend({
+                    model: ClassName
+                });
+
+                FieldItem = Backbone.Model.extend({});
+                FieldList = Backbone.Collection.extend({
+                    model: FieldItem
+                });
+
+
+            });
+
             app.addInitializer(function () {
                 var data = window.data;
-                console.log(data)
-                var allData = new Backbone.Collection(data);
-                this.allData = allData;
 
-                var searchResults = new Backbone.Collection({});
-                searchResults.reset();
-                this.allData.each(function (item) {
-                    searchResults.add(item.toJSON());
-                });
-                this.searchResults = searchResults;
 
-                var pinnedData = new Backbone.Collection({});
+                var allData = new ClassNames(data, {parse: true});
+
+                this.searchResults = allData;
+
+                var pinnedData = new Backbone.Collection({model: EnumItem});
                 pinnedData.reset();
-                //pinnedData.add(allData.models[1].get("enumItems")[0]);
-                //pinnedData.add(allData.models[1].get("enumItems")[1]);
-                //pinnedData.add(allData.models[1].get("enumItems")[2]);
-                //pinnedData.add(allData.models[1].get("enumItems")[3]);
-                //pinnedData.add(allData.models[1].get("enumItems")[4]);
+
                 this.pinnedData = pinnedData;
 
-                this.currentSearchTerm = "admin";
+                this.currentSearchTerm = "";
             });
 
             app.addInitializer(function () {

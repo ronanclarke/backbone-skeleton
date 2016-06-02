@@ -14,16 +14,16 @@
      aria-expanded="true"
      aria-labelledby="heading<%= data.id %>">
     <ul class="list-group">
-        <% _.each(data.enumItems, function(enumItem){ %>
-        <li class="list-group-item enumLabel"> <%= enumItem.displayEnumName %>
-            <button type="button" class="btn btn-xs btn-info pull-right" id="btn_<%= enumItem.enumName %>">Add
+        <% _.each(data.resultItem.get("enumItems").models, function(enumItem){ %>
+        <li class="list-group-item enumLabel"> <%= enumItem.get("displayEnumName") %>
+            <button type="button" class="btn btn-xs btn-info pull-right" id="btn_<%= enumItem.get("enumName") %>">Add
             </button>
 
-            <% if(enumItem.hasMatchingFields == true) { %>
+            <% if(enumItem.get("hasMatchingFields") == true) { %>
             <ul class="list-group field-list">
-                <% _.each(enumItem.fieldList,function(fieldItem){ %>
-                <% if(fieldItem.highlightKey === true || fieldItem.highlightValue === true){ %>
-                <li class="list-group-item"><%= fieldItem.displayKey %> = <%= fieldItem.displayValue %></li>
+                <% _.each(enumItem.get("fieldList").models,function(fieldItem){ %>
+                <% if(fieldItem.get("highlightKey") === true || fieldItem.get("highlightValue") === true){ %>
+                <li class="list-group-item"><%= fieldItem.get("displayKey") %> = <%= fieldItem.get("displayValue") %></li>
                 <% } %>
                 <% }); %>
             </ul>

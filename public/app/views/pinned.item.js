@@ -1,40 +1,41 @@
 define([
-    'app',
-    'text!templates/pinned.item.html'
-  ],
-  function (app, tmpl) {
-    'use strict';
+        'app',
+        'text!templates/pinned.item.html'
+    ],
+    function (app, tmpl) {
+        'use strict';
 
-    var View = Backbone.Marionette.LayoutView.extend({
+        var View = Backbone.Marionette.LayoutView.extend({
 
-      tagName: "div",
-      attributes: {
-        class: "col-md-4"
-      },
+            tagName: "div",
+            attributes: {
+                class: "col-md-4"
+            },
 
 
-      template: function () {
+            template: function () {
 
-        var data = {
-          model: this.model
-        };
+                var data = {
+                    model: this.model
+                };
 
-        return _.template(tmpl, data, {variable: 'data'});
-      },
+                return _.template(tmpl, data, {variable: 'data'});
+            },
 
-      events: {
-        "click .panel-title": "removeMe"
-      },
+            events: {
+                "click .fa-times": "removeMe"
+            },
 
-      initialize: function () {
-        _.bindAll(this, "template");
-      },
+            initialize: function () {
+                _.bindAll(this, "template");
+            },
 
-      removeMe: function () {
-        this.model.destroy();
-      }
+            removeMe: function () {
+                app.pinnedData.remove(this.model);
 
+            }
+
+        });
+
+        return View;
     });
-
-    return View;
-  });

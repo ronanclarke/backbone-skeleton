@@ -28,6 +28,7 @@ define([
 
             shouldShow: function () {
 
+                var regex = new RegExp(app.currentSearchTerm, 'i'); // define regex here to avoid recalcing all the time
                 this.model.set("shouldAutoExpand", false);
 
                 var shouldShow = false;
@@ -41,45 +42,48 @@ define([
 
 
                 // check if the heading has a match
-                shouldShow = this.isMatch(shortClassName);
+                shouldShow = this.isMatch(shortClassName, regex);
 
                 var _this = this;
                 var _model = this.model;
+
                 // check if one of the enum names has a match
-                _.each(this.model.get("enumItems"), function (enumItem) {
+                _.each(this.model.get("enumItems").models, function (enumItem) {
 
-                    enumItem.displayClassName = _this.model.get("displayClassName");
-                    enumItem.displayEnumName = _this.highlightLabel(enumItem.enumName, app.currentSearchTerm);
 
-                    if (_this.isMatch(enumItem.enumName)) {
+                    enumItem.set("displayClassName", _model.get("displayClassName"));
+                    enumItem.set("displayEnumName", _this.highlightLabel(enumItem.get("enumName"), app.currentSearchTerm));
+
+
+                    if (_this.isMatch(enumItem.get("enumName"), regex)) {
                         shouldShow = true;
-                        enumItem.highlight = true;
-
+                        enumItem.set("highlight", true);
                         _model.set("shouldAutoExpand", true);
                     }
 
                     // now check if any of the field keys or values have matches
-                    enumItem.hasMatchingFields = false;
-                    _.each(enumItem.fieldList, function (fieldItem) {
+                    enumItem.set("hasMatchingFields", false);
 
-                        fieldItem.highlightKey = false;
-                        fieldItem.highlightValue = false;
+                    _.each(enumItem.get("fieldList").models, function (fieldItem) {
 
-                        fieldItem.displayKey = _this.highlightLabel(fieldItem.Key, app.currentSearchTerm);
-                        fieldItem.displayValue = _this.highlightLabel(fieldItem.Value, app.currentSearchTerm);
+                        fieldItem.set("highlightKey", false);
+                        fieldItem.set("highlightValue", false);
 
-                        if (_this.isMatch(fieldItem.Key)) {
+                        fieldItem.set("displayKey", _this.highlightLabel(fieldItem.get("Key"), app.currentSearchTerm));
+                        fieldItem.set("displayValue", _this.highlightLabel(fieldItem.get("Value"), app.currentSearchTerm));
+
+                        if (_this.isMatch(fieldItem.get("Key"), regex)) {
                             shouldShow = true;
                             _model.set("shouldAutoExpand", true);
-                            enumItem.hasMatchingFields = true;
-                            fieldItem.highlightKey = true;
+                            enumItem.set("hasMatchingFields", true);
+                            fieldItem.set("highlightKey", true);
                         }
 
-                        if (_this.isMatch(fieldItem.Value)) {
+                        if (_this.isMatch(fieldItem.get("Value"), regex)) {
                             shouldShow = true;
                             _model.set("shouldAutoExpand", true);
-                            fieldItem.highlightValue = true;
-                            enumItem.hasMatchingFields = true;
+                            enumItem.set("hasMatchingFields", true);
+                            fieldItem.set("highlightValue", true);
                         }
 
                     });
@@ -90,13 +94,19 @@ define([
 
             highlightLabel: function (label, term) {
 
-                return label.replace(new RegExp(term, "i"), '<span class="highlight">' + term + '</span>');
+                var regex = new RegExp(term, "i");
+                var match = regex.exec(label);
+
+                if (match) {
+                    return label.replace(new RegExp(term, "i"), '<span class="highlight">' + match[0] + '</span>');
+                }
+                return label;
+
 
             },
 
-            isMatch: function (str) {
-                str = str + "";
-                return (str.search(new RegExp(app.currentSearchTerm, 'i')) > -1);
+            isMatch: function (str, regEx) {
+                return (str.search(regEx) > -1);
             },
 
             events: {
@@ -107,9 +117,8 @@ define([
                 var enumName = ($(e.currentTarget).attr("id")).replace("btn_", "");
                 var _this = this;
 
-
-                _.each(this.model.get("enumItems"), function (item) {
-                    if (item.enumName == enumName) {
+                _.each(this.model.get("enumItems").models, function (item) {
+                    if (item.get("enumName") == enumName) {
                         app.pinnedData.add(item);
                         return;
 
