@@ -16,7 +16,7 @@
     <ul class="list-group">
         <% _.each(data.resultItem.get("enumItems").models, function(enumItem){ %>
         <li class="list-group-item enumLabel"> <%= enumItem.get("displayEnumName") %>
-            <button type="button" class="btn btn-xs btn-info pull-right" id="btn_<%= enumItem.get("enumName") %>">Add
+            <button type="button" class="btn btn-xs btn-success pull-right" id="btn_<%= enumItem.get("enumName") %>">Add
             </button>
 
             <% if(enumItem.get("hasMatchingFields") == true) { %>

@@ -88,7 +88,7 @@ define([
 
                     });
                 });
-
+                this.model.set("shouldShow",shouldShow);
                 return shouldShow;
             },
 
