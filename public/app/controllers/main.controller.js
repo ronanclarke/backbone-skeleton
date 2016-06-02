@@ -1,43 +1,43 @@
 define([
-    'app',
-    'views/results',
-    'views/pinned',
-    'views/search'
-],
-  function (app, ResultsView, PinnedView, SearchView) {
-    'use strict';
+        'app',
+        'views/results',
+        'views/pinned',
+        'views/search'
+    ],
+    function (app, ResultsView, PinnedView, SearchView) {
+        'use strict';
 
-    var Controller = Backbone.Marionette.Controller.extend({
-        initialize : function (options) {
-            options = options || {};
-            
-            _.extend(this, _.pick(options, ['region']));
-            this.controllerEvents = _.extend({}, Backbone.Events);
+        var Controller = Backbone.Marionette.Controller.extend({
+            initialize: function (options) {
+                options = options || {};
 
-          //this.listenTo(this.controllerEvents, 'example:showSecondPage', this.showExample2);
-        },
+                _.extend(this, _.pick(options, ['region']));
+                this.controllerEvents = _.extend({}, Backbone.Events);
 
-      start: function () {
+                //this.listenTo(this.controllerEvents, 'example:showSecondPage', this.showExample2);
+            },
 
-        app.results.show(new ResultsView({
-          controllerEvents: this.controllerEvents,
-          collection: app.allData
-            }));
+            start: function () {
 
-        app.pinned.show(new PinnedView({
-          controllerEvents: this.controllerEvents,
-          collection: app.filteredData
-        }));
+                app.results.show(new ResultsView({
+                    controllerEvents: this.controllerEvents,
+                    collection: app.searchResults
+                }));
 
-
-        app.search.show(new SearchView({
-          controllerEvents: this.controllerEvents,
-
-        }));
-        },
+                app.pinned.show(new PinnedView({
+                    controllerEvents: this.controllerEvents,
+                    collection: app.pinnedData
+                }));
 
 
+                app.search.show(new SearchView({
+                    controllerEvents: this.controllerEvents,
+
+                }));
+            },
+
+
+        });
+
+        return Controller;
     });
-
-    return Controller;
-});

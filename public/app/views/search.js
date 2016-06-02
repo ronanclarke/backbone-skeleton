@@ -15,7 +15,23 @@ function (app, tmpl) {
 
         onRender : function () {
 
+        },
+
+        events: {
+            "keyup #searchBox": "searchTermEntered"
+        },
+
+
+        searchTermEntered: function(){
+
+            var searchTerm = this.$("#searchBox").val();
+            app.currentSearchTerm = searchTerm;
+            this.options.controllerEvents.trigger('search:updated', searchTerm);
         }
+
+
+
+
 
     });
 

@@ -12,7 +12,9 @@ define([
         class: "col-md-4"
       },
 
+
       template: function () {
+
         var data = {
           model: this.model
         };
