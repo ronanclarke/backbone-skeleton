@@ -61,8 +61,18 @@ module.exports = function (grunt) {
             }
         },
 
-        clean: ['public/dist']
+        clean: ['public/dist'],
 
+        bower:{
+
+            install: {
+                options:{
+                    targetDir: "public/libs/vendor"
+                }
+                //just run 'grunt bower:install' and you'll see files from your Bower packages in lib directory
+
+            }
+        }
 
     });
 
@@ -71,8 +81,9 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-contrib-cssmin');
     grunt.loadNpmTasks('grunt-contrib-clean');
+    grunt.loadNpmTasks('grunt-bower-task');
 
-    grunt.registerTask('bundle', ['clean','requirejs', 'less']);
+    grunt.registerTask('bundle', ['clean','bower','requirejs', 'less']);
     grunt.registerTask('build', ['bundle', 'uglify','cssmin']);
 
 
