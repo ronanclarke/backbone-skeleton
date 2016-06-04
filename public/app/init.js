@@ -25,6 +25,27 @@ require(['config.common'], function (commonConfig) {
             };
         });
 
+        app.addInitializer(function(){
+
+            ClinicCollection = Backbone.Collection.extend({
+                url: "http://localhost/api/v3/suppliers/111647/clinics"
+            });
+
+            $.ajaxSetup({
+                beforeSend:function(xhr){
+                    xhr.setRequestHeader("X-WCC-SERVER-TO-SERVER-SECRET","OtErFBJaOW84etqj19nUhJYVdvAfM74N");
+                }
+
+            });
+            var col = new ClinicCollection();
+            col.fetch({
+                done:function(){
+                    console.log("done");
+                }
+            });
+
+        });
+
         app.addInitializer(function () {
             app.router = new Router();
             Backbone.history.start();
