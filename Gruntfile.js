@@ -72,8 +72,8 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-cssmin');
     grunt.loadNpmTasks('grunt-contrib-clean');
 
-    grunt.registerTask('build', ['clean','requirejs', 'less']);
-    grunt.registerTask('release', ['build', 'uglify','cssmin']);
+    grunt.registerTask('bundle', ['clean','requirejs', 'less']);
+    grunt.registerTask('build', ['bundle', 'uglify','cssmin']);
 
 
 };
