@@ -27,22 +27,37 @@ require(['config.common'], function (commonConfig) {
 
         app.addInitializer(function(){
 
-            ClinicCollection = Backbone.Collection.extend({
-                url: "http://localhost/api/v3/suppliers/111647/clinics"
-            });
+            var host = "095a4233.ngrok.io";
 
+
+            // special header to temporarily by-pass security for testing
             $.ajaxSetup({
                 beforeSend:function(xhr){
                     xhr.setRequestHeader("X-WCC-SERVER-TO-SERVER-SECRET","OtErFBJaOW84etqj19nUhJYVdvAfM74N");
                 }
 
             });
-            var col = new ClinicCollection();
-            col.fetch({
-                done:function(){
-                    console.log("done");
-                }
+
+            // example clinics collection
+            ClinicCollection = Backbone.Collection.extend({
+                url: "http://" + host + "/api/v3/suppliers/19557/clinics"
             });
+            new ClinicCollection().fetch();
+
+            // example staff collection
+            StaffCollection = Backbone.Collection.extend({
+                url: "http://" + host + "/api/v3/suppliers/19557/staff"
+            });
+            new StaffCollection().fetch();
+
+            // example treatments (clinics-procedures) collection
+            TreatmentsCollection = Backbone.Collection.extend({
+                url: "http://" + host + "/api/v3/clinics/30872/treatments"
+            });
+            new TreatmentsCollection().fetch();
+
+
+
 
         });
 
