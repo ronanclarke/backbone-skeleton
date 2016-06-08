@@ -7,11 +7,11 @@ require.config({
         'backbone': '../libs/vendor/backbone/backbone',
         'bootstrap': '../libs/vendor/bootstrap/dist/js/bootstrap.min',
         'underscore': '../libs/vendor/underscore/underscore',
-        'jquery': '../libs/vendor/jquery/jquery',
-        'text': '../libs/vendor/requirejs-text/text',
-        'marionette': '../libs/vendor/marionette/lib/backbone.marionette',
+        'jquery': '../libs/vendor/jquery/dist/jquery',
+        'text': '../libs/vendor/text/text',
+        'marionette': '../libs/vendor/backbone.marionette/lib/backbone.marionette',
         'backbone.subroute': '../libs/vendor/backbone.subroute/backbone.subroute',
-        'less': '../libs/vendor/less/dist/less-1.3.3'
+        'less': '../libs/vendor/less/dist/less.js'
     },
 
     wrapShim: true,

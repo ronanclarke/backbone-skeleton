@@ -15,7 +15,8 @@
      aria-labelledby="heading<%= data.id %>">
     <ul class="list-group">
         <% _.each(data.resultItem.get("enumItems").models, function(enumItem){ %>
-        <li class="list-group-item enumLabel"> <%= enumItem.get("displayEnumName") %>
+
+        <li class="list-group-item enumLabel"> <%= "test"+enumItem.get("displayEnumName") %>
             <button type="button" class="btn btn-xs btn-success pull-right" id="btn_<%= enumItem.get("enumName") %>">Add
             </button>
 

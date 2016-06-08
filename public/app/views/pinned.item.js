@@ -19,7 +19,7 @@ define([
                     model: this.model
                 };
 
-                return _.template(tmpl, data, {variable: 'data'});
+                return _.template(tmpl)({data:data});
             },
 
             events: {

@@ -8,6 +8,7 @@ define([
         var View = Backbone.Marionette.ItemView.extend({
 
             template: function () {
+
                 var data = {
                     resultItem: this.model,
                     id: this.model.get("ClassName").replace(/\./g, "_"),
@@ -15,7 +16,7 @@ define([
                     shouldExpand: this.model.get("shouldAutoExpand")
                 };
 
-                return _.template(tmpl, data, {variable: 'data'});
+                return _.template(tmpl)({data: data});
             },
 
             tagName: "div",
@@ -88,7 +89,7 @@ define([
 
                     });
                 });
-                this.model.set("shouldShow",shouldShow);
+                this.model.set("shouldShow", shouldShow);
                 return shouldShow;
             },
 
